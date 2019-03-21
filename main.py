@@ -120,7 +120,7 @@ fact: (eats nyala leaves)\n\
         r2.asserted = True
 
         f0.asserted = False
-        r3.asserted = True
+        r3.asserted = False
         r4.asserted = False
         r5.asserted = False
 
@@ -137,7 +137,7 @@ rule: ((eats ?x plantBasedFood), (isa ?y plantBasedFood)) -> (eats ?x ?y) ASSERT
         actual2 = self.KB.kb_explain(read.parse_input("rule: ((eats ?x plantBasedFood) (isa ?y plantBasedFood)) -> (eats ?x ?y)"))
         self.compare(self.expected, actual)
         self.compare(self.expected2, actual2)
-        test1 = self.KB.kb_explain(read.parse_input("rule: ((genls antelope ?z) (eats ?z leaves)) -> (eats nyala leaves)"))
+        test1 = self.KB.kb_explain(read.parse_input("rule: ((eats herbivore leaves)) -> (eats nyala leaves)"))
         
         
 
