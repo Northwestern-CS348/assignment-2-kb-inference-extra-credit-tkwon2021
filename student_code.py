@@ -188,7 +188,7 @@ class KnowledgeBase(object):
         string += "\n" + self.tabber(tab) + "fact: " + str(fact.statement)
         if fact.asserted == True:
             string += " ASSERTED"
-        else:
+        if len(fact.supported_by) > 0:
             for x in fact.supported_by:
                 string += self.helper(x, tab)
 
@@ -199,7 +199,7 @@ class KnowledgeBase(object):
         string += ") -> " + str(rule.rhs)
         if rule.asserted == True:
             string += " ASSERTED"
-        else:
+        if len(rule.supported_by) > 0:
             for x in rule.supported_by:
                 string += self.helper(x, tab)
         return string
