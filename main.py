@@ -133,8 +133,7 @@ fact: (genls nyala antelope) ASSERTED"
 
         actual = self.KB.kb_explain(read.parse_input("fact: (genls nyala antelope)"))
         self.compare(self.expected, actual)
-        print(self.KB.kb_explain(read.parse_input("rule: ((genls ?x ?y) (genls ?y ?z) (eats ?z leaves)) -> (eats ?x leaves)")))
-        print(self.KB.kb_explain(read.parse_input("rule: ((eats ?x plantBasedFood) (isa ?y plantBasedFood)) -> (eats ?x ?y)")))
+        
         
 
 if __name__ == '__main__':
