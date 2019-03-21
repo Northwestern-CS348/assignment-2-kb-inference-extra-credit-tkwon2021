@@ -143,6 +143,79 @@ class KnowledgeBase(object):
         ####################################################
         # Student code goes here
 
+        final_string = ""
+
+        if isinstance(fact_or_rule, Fact):
+            fact_or_rule = self._get_fact(fact_or_rule)
+            if self._get_fact(fact_or_rule) not in self.facts:
+                return "Fact is not in the KB"
+            else:
+                final_string += "fact: " + str(fact_or_rule.statement)
+                if fact_or_rule.asserted == True:
+                    final_string += " ASSERTED"
+                    return final_string
+                else:
+                    for x in fact_or_rule.supported_by:
+                        final_string += self.helper(x, 1)
+                return final_string
+        elif isinstance(fact_or_rule, Rule):
+            fact_or_rule = self._get_rule(fact_or_rule)
+            if self._get_rule(fact_or_rule) not in self.rules:
+                return "Rule is not in the KB"
+            else:
+                final_string += "rule: (" + str(fact_or_rule.lhs[0])
+                for r in fact_or_rule.lhs[1:]:
+                    final_string += ", " + str(r)
+                final_string += ") -> " + str(fact_or_rule.rhs)
+                if fact_or_rule.asserted == True:
+                    final_string += " ASSERTED"
+                    return final_string
+                else:
+                    for x in fact_or_rule.supported_by:
+                        final_string += self.helper(x, 1)
+                    return final_string
+        else:
+            return False
+
+                
+
+    def helper(self, sup, tab_num):
+        string = ""
+        tab = tab_num
+        fact = self._get_fact(sup[0])
+        rule = self._get_rule(sup[1])
+
+        string += "\n" + self.tabber(tab) + "SUPPORTED BY"
+        tab += 1
+        string += "\n" + self.tabber(tab) + "fact: " + str(fact.statement)
+        if fact.asserted == True:
+            string += " ASSERTED"
+        else:
+            for x in fact.supported_by:
+                string += self.helper(x, tab)
+
+        string += "\n" + self.tabber(tab) + "rule: (" + str(rule.lhs[0])
+        tab += 1
+        for r in rule.lhs[1:]:
+            string += ", " + str(r)
+        string += ") -> " + str(rule.rhs)
+        if rule.asserted == True:
+            string += " ASSERTED"
+        else:
+            for x in rule.supported_by:
+                string += self.helper(x, tab)
+        return string
+        
+
+
+    def tabber(self, tab_num):
+        tab_string = ""
+        for i in range(tab_num):
+            tab_string += "  "
+        return tab_string
+
+
+
 
 class InferenceEngine(object):
     def fc_infer(self, fact, rule, kb):
