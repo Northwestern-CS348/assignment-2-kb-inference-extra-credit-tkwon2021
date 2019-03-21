@@ -153,8 +153,7 @@ class KnowledgeBase(object):
                 final_string += "fact: " + str(fact_or_rule.statement)
                 if fact_or_rule.asserted == True:
                     final_string += " ASSERTED"
-                    return final_string
-                else:
+                if len(fact_or_rule.supported_by) > 0:
                     for x in fact_or_rule.supported_by:
                         final_string += self.helper(x, 1)
                 return final_string
@@ -169,11 +168,10 @@ class KnowledgeBase(object):
                 final_string += ") -> " + str(fact_or_rule.rhs)
                 if fact_or_rule.asserted == True:
                     final_string += " ASSERTED"
-                    return final_string
-                else:
+                if len(fact_or_rule.supported_by) > 0:
                     for x in fact_or_rule.supported_by:
                         final_string += self.helper(x, 1)
-                    return final_string
+                return final_string
         else:
             return False
 
